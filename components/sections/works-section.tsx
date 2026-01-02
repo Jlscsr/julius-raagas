@@ -107,9 +107,12 @@ export default function WorksSection() {
                 index % 2 === 0 ? "md:pr-[20%]" : "md:pl-[20%]"
               }`}
             >
-              <Link href={`/case-studies/${work.slug}`} className="block">
-                <div className="flex items-start gap-6 md:gap-12">
-                  <span className="font-mono text-xs text-[var(--wabi-text-muted)] mt-2">
+              <Link
+                href={`/case-studies/${work.slug}`}
+                className="block cursor-pointer"
+              >
+                <div className="flex items-start gap-6 md:gap-12 p-6 -mx-6 rounded-lg transition-all duration-500 hover:bg-[var(--wabi-bg-secondary)] hover:shadow-lg">
+                  <span className="font-mono text-xs text-[var(--wabi-text-muted)] mt-2 group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
                     {work.id}
                   </span>
 
