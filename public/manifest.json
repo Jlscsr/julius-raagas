@@ -1,0 +1,22 @@
+{
+  "name": "Julius Raagas Portfolio",
+  "short_name": "Julius Raagas",
+  "description": "Portfolio of Julius Raagas - Aspiring AI Developer & Full-Stack Engineer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f2eb",
+  "theme_color": "#f5f2eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
