@@ -111,16 +111,31 @@ export default function WorksSection() {
                 href={`/case-studies/${work.slug}`}
                 className="block cursor-pointer"
               >
-                <div className="flex items-start gap-6 md:gap-12 p-6 -mx-6 rounded-lg transition-all duration-500 hover:bg-[var(--wabi-bg-secondary)] hover:shadow-lg">
+                <div className="flex items-start gap-6 md:gap-12 p-6 -mx-6 rounded-lg transition-all duration-500 hover:bg-[var(--wabi-bg-secondary)] hover:shadow-lg border border-transparent hover:border-[var(--wabi-border)] active:scale-[0.99]">
                   <span className="font-mono text-xs text-[var(--wabi-text-muted)] mt-2 group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
                     {work.id}
                   </span>
 
                   <div className="flex-1">
                     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-8 mb-4">
-                      <h3 className="font-serif text-3xl md:text-4xl font-light text-[var(--wabi-text)] group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
-                        {work.title}
-                      </h3>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-serif text-3xl md:text-4xl font-light text-[var(--wabi-text)] group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
+                          {work.title}
+                        </h3>
+                        <svg
+                          className="w-5 h-5 text-[var(--wabi-blue)] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
                       <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--wabi-text-muted)]">
                         {work.category}
                       </span>
@@ -147,7 +162,7 @@ export default function WorksSection() {
                       <span className="font-mono text-[10px] tracking-widest text-[var(--wabi-text-muted)]">
                         {work.year} — {work.role}
                       </span>
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--wabi-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--wabi-blue)] md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
                         View Study →
                       </span>
                     </div>
