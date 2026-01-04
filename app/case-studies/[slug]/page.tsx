@@ -1,11 +1,9 @@
-"use client";
-
-import { useParams } from "next/navigation";
-import { motion } from "framer-motion";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import GrainOverlay from "@/components/grain-overlay";
-import { useEffect } from "react";
+import { CaseStudyClient } from "@/app/case-studies/[slug]/case-study-client";
 
 const caseStudies = {
   "precision-boxing": {
@@ -217,78 +215,66 @@ const caseStudies = {
       "/projects/wyu/wyu_img_6.jpg",
     ],
   },
-};
+} as const;
 
-export default function CaseStudyPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const study = caseStudies[slug as keyof typeof caseStudies];
+type CaseStudySlug = keyof typeof caseStudies;
 
-  useEffect(() => {
-    if (study) {
-      // Update meta tags dynamically for better SEO
-      document.title = `${study.title} - Case Study | Julius Raagas`;
+// Generate static params for all case studies - CRITICAL for SSG
+export async function generateStaticParams() {
+  return Object.keys(caseStudies).map((slug) => ({
+    slug: slug,
+  }));
+}
 
-      // Update meta description
-      const metaDescription = document.querySelector(
-        'meta[name="description"]'
-      );
-      if (metaDescription) {
-        metaDescription.setAttribute("content", study.concept);
-      }
+// Generate metadata for each case study page
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const study = caseStudies[params.slug as CaseStudySlug];
 
-      // Update Open Graph tags
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) {
-        ogTitle.setAttribute(
-          "content",
-          `${study.title} - Case Study | Julius Raagas`
-        );
-      }
+  if (!study) {
+    return {
+      title: "Case Study Not Found",
+    };
+  }
 
-      const ogDescription = document.querySelector(
-        'meta[property="og:description"]'
-      );
-      if (ogDescription) {
-        ogDescription.setAttribute("content", study.concept);
-      }
+  return {
+    title: `${study.title} - Case Study`,
+    description: study.concept,
+    openGraph: {
+      title: `${study.title} - Case Study | Julius Raagas`,
+      description: study.concept,
+      url: `https://julius-raagas.vercel.app/case-studies/${params.slug}`,
+      type: "article",
+      images:
+        study.images.length > 0 && study.images[0]
+          ? [{ url: study.images[0] }]
+          : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${study.title} - Case Study`,
+      description: study.concept,
+      images:
+        study.images.length > 0 && study.images[0]
+          ? [study.images[0]]
+          : undefined,
+    },
+  };
+}
 
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      if (ogUrl) {
-        ogUrl.setAttribute(
-          "content",
-          `https://julius-raagas.vercel.app/case-studies/${slug}`
-        );
-      }
+export default function CaseStudyPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const study = caseStudies[params.slug as CaseStudySlug];
 
-      // Add JSON-LD structured data
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.text = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: study.title,
-        description: study.concept,
-        author: {
-          "@type": "Person",
-          name: "Julius Caesar Raagas",
-          url: "https://julius-raagas.vercel.app",
-        },
-        datePublished: "2025-01-01",
-        publisher: {
-          "@type": "Person",
-          name: "Julius Caesar Raagas",
-        },
-      });
-      document.head.appendChild(script);
-
-      return () => {
-        document.head.removeChild(script);
-      };
-    }
-  }, [study, slug]);
-
-  if (!study) return <div>Not Found</div>;
+  if (!study) {
+    notFound();
+  }
 
   return (
     <main className="min-h-screen bg-[var(--wabi-bg)] text-[var(--wabi-text)] selection:bg-[var(--wabi-blue)]/20">
@@ -303,78 +289,64 @@ export default function CaseStudyPage() {
         </Link>
       </nav>
 
+      {/* Structured data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: study.title,
+            description: study.concept,
+            author: {
+              "@type": "Person",
+              name: "Julius Caesar Raagas",
+              url: "https://julius-raagas.vercel.app",
+            },
+            datePublished: "2025-01-01",
+            publisher: {
+              "@type": "Person",
+              name: "Julius Caesar Raagas",
+            },
+          }),
+        }}
+      />
+
       <section className="pt-24 sm:pt-32 md:pt-40 pb-20 px-6 md:px-16 lg:px-24">
         <div className="max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--wabi-blue)]">
-              Case Study / {study.timeline}
-            </span>
-            <h1 className="mt-6 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light leading-tight text-[var(--wabi-text)]">
-              {study.title}
-            </h1>
-            <p className="mt-4 font-mono text-sm uppercase tracking-wider text-[var(--wabi-text-muted)]">
-              {study.subtitle}
-            </p>
-          </motion.div>
+          <CaseStudyClient study={study} />
 
           <div className="mt-20 grid grid-cols-1 md:grid-cols-12 gap-12">
             <div className="md:col-span-8">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
+              <div>
                 <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)] mb-6">
                   The Concept
                 </h2>
                 <p className="font-serif text-2xl leading-relaxed text-[var(--wabi-text-secondary)]">
                   {study.concept}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="mt-12"
-              >
+              <div className="mt-12">
                 <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)] mb-6">
                   The Challenge
                 </h2>
                 <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
                   {study.challenge}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="mt-12"
-              >
+              <div className="mt-12">
                 <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)] mb-6">
                   The Solution
                 </h2>
                 <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
                   {study.solution}
                 </p>
-              </motion.div>
+              </div>
 
               {study.results && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  viewport={{ once: true }}
-                  className="mt-12 p-8 bg-[var(--wabi-bg-secondary)] border border-[var(--wabi-border)]"
-                >
+                <div className="mt-12 p-8 bg-[var(--wabi-bg-secondary)] border border-[var(--wabi-border)]">
                   <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-blue)] mb-6">
                     Impact & Results
                   </h2>
@@ -389,69 +361,50 @@ export default function CaseStudyPage() {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               )}
 
               <div className="mt-16 space-y-16">
                 {study.sections.map((section, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                  >
+                  <div key={i}>
                     <h3 className="font-serif text-3xl font-light mb-4 text-[var(--wabi-text)]">
                       {section.title}
                     </h3>
                     <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
                       {section.content}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
               {study.images && study.images.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                  viewport={{ once: true }}
-                  className="mt-20"
-                >
+                <div className="mt-20">
                   <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)] mb-8">
                     Project Gallery
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {study.images.map((image: string, idx: number) => (
-                      <motion.div
+                      <div
                         key={idx}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: idx * 0.1 }}
-                        viewport={{ once: true }}
                         className="relative aspect-video overflow-hidden border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)]"
                       >
                         <Image
                           src={image}
-                          alt={`Project screenshot ${idx + 1}`}
+                          alt={`${study.title} screenshot ${idx + 1}`}
                           fill
-                          className="object-cover hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                          priority={idx === 0}
+                          quality={85}
+                          className="object-cover"
                         />
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {(study.liveDemo || study.github) && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                  viewport={{ once: true }}
-                  className="mt-16 flex flex-wrap gap-4"
-                >
+                <div className="mt-16 flex flex-wrap gap-4">
                   {study.liveDemo && (
                     <a
                       href={study.liveDemo}
@@ -479,10 +432,10 @@ export default function CaseStudyPage() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-3 px-8 py-4 border border-[var(--wabi-blue)] text-[var(--wabi-blue)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--wabi-blue)] hover:text-white transition-all duration-500"
                     >
-                      View onn Github (Backend) ↗
+                      View on GitHub (Backend) ↗
                     </a>
                   )}
-                </motion.div>
+                </div>
               )}
             </div>
 
