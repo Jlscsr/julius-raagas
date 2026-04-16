@@ -1,45 +1,45 @@
 # Julius Caesar Raagas - Portfolio
 
 > **AI-Native Developer & Full-Stack Architect**  
-> Building with intention. 侘寂 (Wabi-Sabi)
+> Building with intention. Wabi-Sabi.
 
-A minimalist portfolio showcasing the evolution from core engineering fundamentals to AI-native development and deep model optimization.
+A minimalist portfolio showcasing the progression from full-stack fundamentals to AI-assisted product engineering, interactive planning tools, and modern web systems.
 
-## 👨‍💻 About Me
+## About
 
-I'm **Julius Caesar F. Raagas**, a Full-Stack Developer and Computer Science student transitioning from coder to architect. I build systems where AI isn't an afterthought—it's part of the foundation.
+I'm **Julius Caesar F. Raagas**, a Full-Stack Developer and Computer Science student transitioning from coder to architect. I focus on systems where product thinking, interface design, and AI-assisted workflows reinforce each other instead of competing.
 
-- 🎓 **Computer Science Student** at Cavite State University - Bacoor Campus (Expected 2026)
-- 💼 **AI-Native Developer** specializing in full-stack architecture and machine learning
-- 🌍 Based in the **Philippines**
-- 📧 **Contact:** raagasjuliuscaesar@gmail.com
-- 📱 **Phone:** +63 977 087 8614
+- **Computer Science Student** at Cavite State University - Bacoor Campus (Expected 2026)
+- **Full-Stack Developer** focused on architecture, system design, and fast product iteration
+- Based in the **Philippines**
+- **Contact:** raagasjuliuscaesar@gmail.com
+- **Phone:** +63 977 087 8614
 
-## 🚀 Featured Projects
+## Featured Projects
 
-### [Precision Boxing](https://github.com/Jlscsr/precision-boxing-thesis) (2025)
+### [Heartopia Draft](https://github.com/Jlscsr/heartopia-house-layout-visualizer) (2026)
 
-**Deep AI Engineering & Model Fine-tuning**
+**Interactive Systems Design**
 
-A high-tech mobile app providing real-time biomechanical feedback for solo boxers using 3D pose estimation.
+A metric-first planning tool for Heartopia players with deterministic grid logic, canvas editing workflows, furniture placement, and authenticated project autosave.
 
-- ✅ 95% pose detection accuracy in real-time
-- ✅ Sub-100ms latency for feedback delivery
-- ✅ 12 distinct punch types with 92% classification accuracy
-- ✅ 10,000+ training poses processed
+- Three-tier spatial grid with 1.0 m, 0.5 m, and 0.25 m precision levels
+- Editing tools for walls, floors, openings, fences, crops, and furniture
+- Responsive editor flows for mobile, tablet, and desktop
+- Signed-in project persistence with autosave, validation, and route protection
 
-**Tech Stack:** React Native, TypeScript, MediaPipe BlazePose, TensorFlow Lite, Python, Supabase
+**Tech Stack:** Next.js App Router, React 19, TypeScript, Tailwind CSS, MongoDB, Jest
 
 ### [Stillness E-commerce](https://github.com/Jlscsr/stillness-ecommerce) (2024)
 
 **AI-Native High-Velocity Development**
 
-A minimalist e-commerce platform built in 72 hours to demonstrate AI-augmented development capabilities.
+A minimalist e-commerce platform built in 72 hours to demonstrate AI-assisted shipping speed without sacrificing UX or maintainability.
 
-- ✅ 72-hour development cycle (typical: 2-3 weeks)
-- ✅ Lighthouse Performance Score: 97/100
-- ✅ 80% reduction in traditional development time
-- ✅ 40+ reusable UI components
+- 72-hour development cycle
+- Lighthouse Performance Score: 97/100
+- 80% reduction in traditional development time
+- 40+ reusable UI components
 
 **Tech Stack:** Vue.js, Nuxt.js, TypeScript, Pinia, Tailwind CSS, Vercel
 
@@ -47,16 +47,16 @@ A minimalist e-commerce platform built in 72 hours to demonstrate AI-augmented d
 
 **Core Full-Stack Foundation**
 
-A social media platform for recipe sharing, demonstrating solid full-stack engineering fundamentals.
+A social platform for recipe sharing that established my early backend, API, and product fundamentals.
 
-- ✅ Complete full-stack application from scratch
-- ✅ Secure JWT authentication
-- ✅ RESTful API with 6+ endpoints
-- ✅ Responsive frontend with Vue.js
+- Complete full-stack application from scratch
+- Secure JWT authentication
+- RESTful API with 6+ endpoints
+- Responsive frontend with Vue.js and Quasar
 
 **Tech Stack:** Vue.js, Quasar Framework, Node.js, Express.js, MySQL, AWS S3
 
-## 💻 Technical Skills
+## Technical Skills
 
 ### Frontend
 
@@ -66,9 +66,9 @@ React, Next.js, Vue.js, Nuxt.js, TypeScript, Three.js, Framer Motion, Tailwind C
 
 Node.js, Express.js, Laravel, RESTful APIs, GraphQL
 
-### AI/ML
+### AI Systems
 
-MediaPipe, TensorFlow Lite, Neural Networks, Model Fine-tuning, Prompt Engineering
+LLM Integration, Prompt Engineering, AI Workflows, Evaluation, Agentic Tooling
 
 ### Database
 
@@ -82,73 +82,51 @@ AWS, Vercel, Docker, CI/CD
 
 Figma, SCSS, Responsive Design, Wabi-Sabi Philosophy
 
-## 🎨 Portfolio Tech Stack
+## Portfolio Stack
 
-This portfolio itself is built with modern technologies:
-
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 16
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS, Custom CSS Variables
+- **Styling:** Tailwind CSS and CSS variables
 - **Animations:** Framer Motion
-- **3D Graphics:** React Three Fiber, Three.js
-- **UI Components:** Radix UI, shadcn/ui
-- **Analytics:** Vercel Analytics
+- **3D Graphics:** React Three Fiber and Three.js
+- **UI Components:** Radix UI and shadcn/ui
+- **Analytics:** Vercel Analytics and Speed Insights
 - **Deployment:** Vercel
 
-## 📂 Project Structure
+## Project Structure
 
-```
+```text
 portfolio/
-├── app/                    # Next.js app directory
-│   ├── about/             # About page
-│   ├── case-studies/      # Individual project case studies
-│   ├── journal/           # Blog/journal entries
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── sections/          # Page sections (hero, works, etc.)
-│   ├── three/             # Three.js 3D components
-│   └── ui/                # Reusable UI components
-├── lib/                   # Utility functions
-├── public/                # Static assets
-└── styles/                # Global styles
+|-- app/            # Next.js app directory
+|-- components/     # React components and page sections
+|-- lib/            # Shared utilities and project data
+|-- public/         # Static assets
+`-- styles/         # Global styles
 ```
 
-## 🎯 Design Philosophy
+## Design Philosophy
 
-This portfolio embraces **Wabi-Sabi** (侘寂) - the Japanese aesthetic philosophy centered on the acceptance of transience and imperfection. The design features:
+This portfolio embraces **Wabi-Sabi**: simplicity, texture, asymmetry, and restraint. The design emphasizes:
 
-- ✨ Minimalist, clean aesthetics
-- 🎨 Subtle animations and micro-interactions
-- 📱 Mobile-first responsive design
-- 🌾 Grain texture overlay for organic feel
-- 🎭 Japanese kanji integration (智 形 心 縁)
-- 🌓 Dark/light theme support
+- Minimalist composition
+- Subtle motion and micro-interactions
+- Mobile-first responsiveness
+- Organic texture through grain overlays
+- Japanese-inspired visual language
 
-## 📊 Performance
+## Featured Writing
 
-- ⚡ **Lighthouse Score:** 95+
-- 🚀 **First Contentful Paint:** < 1s
-- 📦 **Optimized Bundle Size**
-- ♿ **Accessible (WCAG 2.1)**
-- 📱 **Fully Responsive**
-
-## 📝 Featured Writing
-
-- **The Shift to Deep AI** - Transitioning from prompt-engineering to fine-tuning
+- **Designing Spatial Planning Tools** - Deterministic rules, reliable interactions, and where precision matters
 - **High-Velocity Shipping** - Building an e-commerce engine in 72 hours
 - **Wabi-Sabi in Code** - Embracing imperfection in system design
 
-## 🤝 Connect With Me
+## Connect
 
-- 💼 [LinkedIn](https://linkedin.com/in/julius-caesar-raagas)
-- 🐙 [GitHub](https://github.com/Jlscsr)
-- 📧 raagasjuliuscaesar@gmail.com
-
-## 📜 License
-
-This project is open source and available under the [MIT License](LICENSE).
+- [LinkedIn](https://linkedin.com/in/julius-caesar-raagas)
+- [GitHub](https://github.com/Jlscsr)
+- raagasjuliuscaesar@gmail.com
 
 ---
 
 **Built with intention** by Julius Caesar Raagas  
-© 2026 All rights reserved
+Copyright 2026

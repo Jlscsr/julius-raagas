@@ -4,8 +4,8 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { motion, type MotionValue } from "framer-motion";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/components/theme-provider";
 import FloatingStone from "../three/floating-stone";
 
 interface HeroSectionProps {
@@ -13,14 +13,14 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ scrollOpacity }: HeroSectionProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isDark = mounted && theme === "dark";
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <section className="relative h-screen flex items-center bg-[var(--wabi-bg)]">
@@ -57,7 +57,7 @@ export default function HeroSection({ scrollOpacity }: HeroSectionProps) {
             transition={{ duration: 1.5, delay: 0.3 }}
             className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--wabi-text-muted)] mb-6"
           >
-            Full-Stack Developer & CS Student | AI-Native Engineer
+            Full-Stack Developer | AI-Native Engineer
           </motion.p>
 
           <motion.h1

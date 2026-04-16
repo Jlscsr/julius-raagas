@@ -249,21 +249,21 @@ export default function AboutPage() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <h3 className="font-serif text-2xl font-light text-[var(--wabi-text)]">
-                    AI & Machine Learning
+                    AI & Intelligent Systems
                   </h3>
                   <p className="font-serif text-base text-[var(--wabi-text-secondary)] leading-relaxed">
-                    Learning LLM integration, model fine-tuning, neural network
-                    optimization, and prompt engineering. Gaining experience
-                    with MediaPipe, TensorFlow, and real-time ML inference on
-                    mobile devices.
+                    Learning LLM integration, evaluation, prompt engineering,
+                    and AI-assisted product workflows. Interested in how
+                    intelligent systems fit into real products without
+                    sacrificing maintainability, latency, or user experience.
                   </p>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {[
-                      "TensorFlow",
-                      "MediaPipe",
-                      "Neural Networks",
                       "LLM Integration",
-                      "Model Fine-tuning",
+                      "Prompt Engineering",
+                      "Evaluation",
+                      "AI Workflows",
+                      "System Design",
                     ].map((t) => (
                       <span
                         key={t}
@@ -383,9 +383,9 @@ export default function AboutPage() {
                 <p>
                   Building{" "}
                   <span className="text-[var(--wabi-text)]">
-                    Precision Boxing
+                    Heartopia Draft
                   </span>{" "}
-                  (AI-powered training app),{" "}
+                  (metric-first planner for Heartopia players),{" "}
                   <span className="text-[var(--wabi-text)]">Project Slime</span>{" "}
                   (desktop companion with AI integration), and experimenting
                   with translation models for local dialects. Using these to

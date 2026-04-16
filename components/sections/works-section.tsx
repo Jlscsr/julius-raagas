@@ -3,42 +3,8 @@
 import { motion, useInView, type Variants } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-
-const works = [
-  {
-    id: "01",
-    slug: "precision-boxing",
-    title: "Precision Boxing",
-    category: "AI Innovation (2025)",
-    year: "2025",
-    role: "Lead AI Developer",
-    description:
-      "Specializing in Deep AI Engineering and Model Fine-tuning. A high-tech system providing real-time biomechanical feedback using 3D pose estimation.",
-    tech: ["MediaPipe BlazePose", "TensorFlow Lite", "Neural Networks"],
-  },
-  {
-    id: "02",
-    slug: "stillness-ecommerce",
-    title: "Stillness E-commerce",
-    category: "AI-Native High-Velocity (2024)",
-    year: "2024",
-    role: "AI-Native Full-Stack Developer",
-    description:
-      "Demonstrating AI-augmented efficiency. Engineered and deployed a minimalist platform in a record 72-hour timeframe using Prompt Engineering.",
-    tech: ["Vue.js", "AI-augmented workflow", "Prompt Engineering"],
-  },
-  {
-    id: "03",
-    slug: "whats-your-ulam",
-    title: "What's Your Ulam?",
-    category: "Core Foundation (2020)",
-    year: "2020",
-    role: "Full-Stack Developer",
-    description:
-      "Solid Full-Stack fundamentals. A community-driven social ecosystem featuring secure authentication and robust CRUD operations.",
-    tech: ["Node.js", "Express.js", "RESTful APIs"],
-  },
-];
+import Image from "next/image";
+import { projects } from "@/lib/projects";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -70,9 +36,9 @@ export default function WorksSection() {
   return (
     <section
       id="works"
-      className="min-h-screen py-20 md:py-32 px-6 md:px-16 lg:px-24 bg-[var(--wabi-bg)]"
+      className="min-h-screen bg-[var(--wabi-bg)] px-6 py-20 md:px-16 md:py-32 lg:px-24"
     >
-      <div className="max-w-6xl mr-0 md:mr-[5%] lg:mr-[8%] ml-auto">
+      <div className="ml-auto mr-0 max-w-6xl md:mr-[5%] lg:mr-[8%]">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -80,15 +46,15 @@ export default function WorksSection() {
           viewport={{ once: true }}
           className="mb-12 md:mb-20"
         >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--wabi-blue)]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--wabi-blue)]">
             The Evolution
           </span>
-          <h2 className="mt-4 font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[var(--wabi-text)]">
+          <h2 className="mt-4 font-serif text-3xl font-light text-[var(--wabi-text)] md:text-4xl lg:text-5xl">
             Selected Works
           </h2>
-          <p className="mt-6 max-w-xl font-serif text-base md:text-lg text-[var(--wabi-text-secondary)] leading-relaxed">
-            A journey from core engineering fundamentals to high-velocity
-            AI-native development and deep model optimization.
+          <p className="mt-6 max-w-xl font-serif text-base leading-relaxed text-[var(--wabi-text-secondary)] md:text-lg">
+            A progression from early full-stack foundations to AI-assisted
+            shipping and interactive product engineering.
           </p>
         </motion.div>
 
@@ -99,78 +65,100 @@ export default function WorksSection() {
           animate={isInView ? "visible" : "hidden"}
           className="space-y-16 md:space-y-24"
         >
-          {works.map((work, index) => (
-            <motion.article
-              key={work.id}
-              variants={itemVariants}
-              className={`group ${
-                index % 2 === 0 ? "md:pr-[20%]" : "md:pl-[20%]"
-              }`}
-            >
-              <Link
-                href={`/case-studies/${work.slug}`}
-                className="block cursor-pointer"
+          {projects.map((work, index) => {
+            const previewImage = work.coverImage ?? work.images[0] ?? null;
+
+            return (
+              <motion.article
+                key={work.id}
+                variants={itemVariants}
+                className={`group ${
+                  index % 2 === 0 ? "md:pr-[20%]" : "md:pl-[20%]"
+                }`}
               >
-                <div className="flex items-start gap-6 md:gap-12 p-6 -mx-6 rounded-lg transition-all duration-500 hover:bg-[var(--wabi-bg-secondary)] hover:shadow-lg border border-transparent hover:border-[var(--wabi-border)] active:scale-[0.99]">
-                  <span className="font-mono text-xs text-[var(--wabi-text-muted)] mt-2 group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
-                    {work.id}
-                  </span>
-
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-8 mb-4">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-serif text-3xl md:text-4xl font-light text-[var(--wabi-text)] group-hover:text-[var(--wabi-blue)] transition-colors duration-500">
-                          {work.title}
-                        </h3>
-                        <svg
-                          className="w-5 h-5 text-[var(--wabi-blue)] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </div>
-                      <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--wabi-text-muted)]">
-                        {work.category}
-                      </span>
-                    </div>
-
-                    <p className="font-serif text-lg text-[var(--wabi-text-secondary)] mb-4">
-                      {work.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {work.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2 py-1 bg-[var(--wabi-bg-secondary)] text-[var(--wabi-text-muted)] font-mono text-[9px] uppercase tracking-wider"
-                        >
-                          {t}
+                <Link
+                  href={`/case-studies/${work.slug}`}
+                  className="block cursor-pointer"
+                >
+                  <div className="rounded-lg border border-transparent p-6 transition-all duration-500 hover:border-[var(--wabi-border)] hover:bg-[var(--wabi-bg-secondary)] hover:shadow-lg active:scale-[0.99] -mx-6">
+                    <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-center xl:gap-8">
+                      <div className="flex items-start gap-6 md:gap-12">
+                        <span className="mt-2 font-mono text-xs text-[var(--wabi-text-muted)] transition-colors duration-500 group-hover:text-[var(--wabi-blue)]">
+                          {work.id}
                         </span>
-                      ))}
-                    </div>
 
-                    <div className="h-px bg-[var(--wabi-border)] group-hover:bg-[var(--wabi-blue)] group-hover:scale-x-105 origin-left transition-all duration-700" />
+                        <div className="flex-1">
+                          <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between md:gap-8">
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-serif text-3xl font-light text-[var(--wabi-text)] transition-colors duration-500 group-hover:text-[var(--wabi-blue)] md:text-4xl">
+                                {work.title}
+                              </h3>
+                              <svg
+                                className="h-5 w-5 text-[var(--wabi-blue)] opacity-60 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 5l7 7-7 7"
+                                />
+                              </svg>
+                            </div>
+                            <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--wabi-text-muted)]">
+                              {work.category}
+                            </span>
+                          </div>
 
-                    <div className="flex justify-between items-center mt-4">
-                      <span className="font-mono text-[10px] tracking-widest text-[var(--wabi-text-muted)]">
-                        {work.year} — {work.role}
-                      </span>
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--wabi-blue)] md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
-                        View Study →
-                      </span>
+                          <p className="mb-4 font-serif text-lg text-[var(--wabi-text-secondary)]">
+                            {work.description}
+                          </p>
+
+                          <div className="mb-4 flex flex-wrap gap-2">
+                            {work.tech.map((tech) => (
+                              <span
+                                key={tech}
+                                className="bg-[var(--wabi-bg-secondary)] px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-[var(--wabi-text-muted)]"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="h-px origin-left bg-[var(--wabi-border)] transition-all duration-700 group-hover:scale-x-105 group-hover:bg-[var(--wabi-blue)]" />
+
+                          <div className="mt-4 flex items-center justify-between">
+                            <span className="font-mono text-[10px] tracking-widest text-[var(--wabi-text-muted)]">
+                              {work.year} - {work.role}
+                            </span>
+                            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--wabi-blue)] transition-opacity duration-500 md:opacity-0 md:group-hover:opacity-100">
+                              View Study -&gt;
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {previewImage && (
+                        <div className="relative aspect-[16/10] overflow-hidden border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)]">
+                          <Image
+                            src={previewImage}
+                            alt={`${work.title} preview`}
+                            fill
+                            sizes="(max-width: 1279px) 100vw, 288px"
+                            quality={85}
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              </Link>
-            </motion.article>
-          ))}
+                </Link>
+              </motion.article>
+            );
+          })}
         </motion.div>
       </div>
     </section>

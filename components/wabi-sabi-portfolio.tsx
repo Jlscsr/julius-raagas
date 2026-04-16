@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import HeroSection from "./sections/hero-section";
 import ExpertiseSection from "./sections/expertise-section";
@@ -17,55 +17,10 @@ export default function WabiSabiPortfolio() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.3]);
 
-  useEffect(() => {
-    // Add JSON-LD structured data for the homepage
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      name: "Julius Caesar Raagas",
-      url: "https://julius-raagas.vercel.app",
-      jobTitle: "AI Developer & Full-Stack Engineer",
-      description:
-        "Aspiring AI Developer specializing in machine learning, computer vision, and full-stack web development",
-      email: "raagasjuliuscaesar@gmail.com",
-      telephone: "+63-977-087-8614",
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "Philippines",
-      },
-      sameAs: [
-        "https://github.com/Jlscsr",
-        "https://www.linkedin.com/in/julius-caesar-raagas-93b794276/",
-      ],
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "Informatics College Northgate",
-      },
-      knowsAbout: [
-        "Artificial Intelligence",
-        "Machine Learning",
-        "Computer Vision",
-        "Full-Stack Development",
-        "React",
-        "TypeScript",
-        "Python",
-        "TensorFlow",
-        "PyTorch",
-      ],
-    });
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
-
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-y-auto overflow-x-hidden"
+      className="h-screen overflow-x-hidden overflow-y-auto"
     >
       <GrainOverlay />
       <Navigation />
@@ -79,13 +34,13 @@ export default function WabiSabiPortfolio() {
         <ContactSection />
       </main>
 
-      <footer className="py-16 px-8 md:px-16 lg:px-24 bg-[var(--wabi-bg)]">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          <p className="font-mono text-xs tracking-widest text-[var(--wabi-text-muted)] uppercase">
-            © 2026 Julius Raagas — Crafting with intention
+      <footer className="bg-[var(--wabi-bg)] px-8 py-16 md:px-16 lg:px-24">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row">
+          <p className="font-mono text-xs uppercase tracking-widest text-[var(--wabi-text-muted)]">
+            Copyright 2026 Julius Raagas - Crafting with intention
           </p>
           <p className="font-mono text-xs text-[var(--wabi-text-muted)]">
-            侘寂
+            Wabi-Sabi
           </p>
         </div>
       </footer>

@@ -27,22 +27,23 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://julius-raagas.vercel.app"),
   title: {
-    default: "Julius Raagas | AI Developer & Full-Stack Engineer Portfolio",
+    default: "Julius Raagas | Full-Stack Developer & AI-Native Engineer",
     template: "%s | Julius Raagas",
   },
   description:
-    "Portfolio of Julius Raagas - Aspiring AI Developer specializing in machine learning, computer vision, and full-stack web development. View projects in AI-powered boxing training, e-commerce platforms, and recipe recommendation systems.",
+    "Portfolio of Julius Raagas - full-stack developer focused on AI-assisted product engineering, interactive planning tools, and modern web applications.",
   keywords: [
     "Julius Raagas",
-    "AI Developer",
-    "Machine Learning Engineer",
     "Full-Stack Developer",
-    "Computer Vision",
+    "AI-Native Engineer",
+    "AI-Assisted Development",
+    "System Design",
+    "Interactive Product Engineering",
     "React Developer",
     "Next.js Developer",
-    "Python Developer",
-    "TensorFlow",
-    "PyTorch",
+    "TypeScript Developer",
+    "MongoDB",
+    "Tailwind CSS",
     "Portfolio",
     "Philippines",
     "Web Developer",
@@ -68,9 +69,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://julius-raagas.vercel.app",
     siteName: "Julius Raagas Portfolio",
-    title: "Julius Raagas | AI Developer & Full-Stack Engineer",
+    title: "Julius Raagas | Full-Stack Developer & AI-Native Engineer",
     description:
-      "Portfolio showcasing AI/ML projects, full-stack web applications, and software engineering work by Julius Raagas.",
+      "Portfolio showcasing AI-assisted product engineering, interactive planning tools, and full-stack web applications by Julius Raagas.",
     images: [
       {
         url: "/og-image.jpg",
@@ -82,9 +83,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Julius Raagas | AI Developer & Full-Stack Engineer",
+    title: "Julius Raagas | Full-Stack Developer & AI-Native Engineer",
     description:
-      "Portfolio showcasing AI/ML projects, full-stack web applications, and software engineering work.",
+      "Portfolio showcasing AI-assisted product engineering, interactive planning tools, and full-stack web applications.",
     images: ["/og-image.jpg"],
     creator: "@juliusraagas",
   },
@@ -107,7 +108,7 @@ export default function RootLayout({
         <link rel="canonical" href="https://juliusraagas.dev" />
       </head>
       <body
-        className={`${cormorant.variable} ${jetbrains.variable} font-serif antialiased bg-[var(--wabi-bg)] text-[var(--wabi-text)]`}
+        className={`${cormorant.variable} ${jetbrains.variable} bg-[var(--wabi-bg)] font-serif antialiased text-[var(--wabi-text)]`}
       >
         <ThemeProvider
           attribute="class"
