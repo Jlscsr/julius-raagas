@@ -69,7 +69,7 @@ export default function HeroSection({ scrollOpacity }: HeroSectionProps) {
             Julius Raagas
             <br />
             <span className="text-[var(--wabi-blue)]">
-              from coder to architect
+              Full-stack developer
             </span>
           </motion.h1>
 
@@ -79,9 +79,9 @@ export default function HeroSection({ scrollOpacity }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.9 }}
             className="mt-12 max-w-md font-serif text-lg text-[var(--wabi-text-secondary)] leading-relaxed"
           >
-            Building systems where AI isn't just a tool—it's part of the core.
-            Transitioning from writing code to engineering architecture. Based
-            in the Philippines, learning in public.
+            Building full-stack products with clean interfaces, reliable
+            systems, and practical AI workflows. Based in the Philippines,
+            learning in public.
           </motion.p>
 
           <motion.div

@@ -76,9 +76,8 @@ export default function AboutPage() {
                   <span className="text-[var(--wabi-blue)]">
                     Julius Caesar F. Raagas
                   </span>
-                  , a Full-Stack Developer and CS Student transitioning from
-                  coder to architect. I build systems where AI isn't an
-                  afterthought—it's part of the foundation.
+                  , a Full-Stack Developer and CS Student. I build systems
+                  where AI isn't an afterthought—it's part of the foundation.
                 </p>
                 <p className="text-sm sm:text-base md:text-lg text-[var(--wabi-text-secondary)]">
                   Started coding in 2020. Went through tutorial hell,

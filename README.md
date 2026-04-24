@@ -7,7 +7,7 @@ A minimalist portfolio showcasing the progression from full-stack fundamentals t
 
 ## About
 
-I'm **Julius Caesar F. Raagas**, a Full-Stack Developer and Computer Science student transitioning from coder to architect. I focus on systems where product thinking, interface design, and AI-assisted workflows reinforce each other instead of competing.
+I'm **Julius Caesar F. Raagas**, a Full-Stack Developer and Computer Science student. I focus on systems where product thinking, interface design, and AI-assisted workflows reinforce each other instead of competing.
 
 - **Computer Science Student** at Cavite State University - Bacoor Campus (Expected 2026)
 - **Full-Stack Developer** focused on architecture, system design, and fast product iteration
