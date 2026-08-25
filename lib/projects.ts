@@ -177,9 +177,9 @@ export const projects: ProjectStudy[] = [
       "Vercel",
       "Stripe API",
     ],
-    liveDemo: null,
-    github: "https://github.com/Jlscsr/stillness-ecommerce",
-    githubBackend: "https://github.com/Jlscsr/stillness-ecommerce-v2-be",
+    liveDemo: "https://stillness-ecommerce.vercel.app/",
+    github: null,
+    githubBackend: null,
     coverImage: "/projects/stillness/stllness_img_1.png",
     images: [
       "/projects/stillness/stllness_img_1.png",
