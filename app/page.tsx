@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import WabiSabiPortfolio from "@/components/wabi-sabi-portfolio";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Page() {
   const structuredData = {
@@ -6,7 +11,7 @@ export default function Page() {
     "@type": "Person",
     name: "Julius Caesar Raagas",
     url: "https://julius-raagas.vercel.app",
-    jobTitle: "Full-Stack Developer & AI-Native Engineer",
+    jobTitle: "Full-Stack Developer",
     description:
       "Full-stack developer focused on AI-assisted product engineering, interactive planning tools, and modern web applications.",
     email: "raagasjuliuscaesar@gmail.com",
@@ -19,10 +24,6 @@ export default function Page() {
       "https://github.com/Jlscsr",
       "https://www.linkedin.com/in/julius-caesar-raagas-93b794276/",
     ],
-    alumniOf: {
-      "@type": "CollegeOrUniversity",
-      name: "Informatics College Northgate",
-    },
     knowsAbout: [
       "AI-Assisted Development",
       "System Design",

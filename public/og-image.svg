@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f2eb"/>
+  <path d="M72 80H1128M72 550H1128" stroke="#d4d0c7"/>
+  <text x="72" y="145" font-family="monospace" font-size="18" letter-spacing="3" fill="#396987">FULL-STACK DEVELOPER · PHILIPPINES</text>
+  <text x="68" y="270" font-family="Georgia,serif" font-size="82" fill="#1a1a1a">Julius Raagas</text>
+  <text x="72" y="348" font-family="Georgia,serif" font-size="39" fill="#396987">Useful products.</text>
+  <text x="72" y="400" font-family="Georgia,serif" font-size="39" fill="#396987">Thoughtful engineering.</text>
+  <text x="72" y="510" font-family="monospace" font-size="19" fill="#626262">julius-raagas.vercel.app</text>
+  <g transform="translate(790 130) scale(.7)">
+    <path d="M110 65 237 35 343 105 388 231 332 341 205 377 84 313 36 181Z" fill="#96b6c9"/>
+    <path d="M110 65 237 35 199 153 36 181Z" fill="#bdd3df"/>
+    <path d="M237 35 343 105 199 153Z" fill="#a8c5d6"/>
+    <path d="M343 105 388 231 281 235 199 153Z" fill="#89adc4"/>
+    <path d="M36 181 199 153 131 266 84 313Z" fill="#759cb5"/>
+    <path d="M199 153 281 235 131 266Z" fill="#a2bfce"/>
+    <path d="M388 231 332 341 281 235Z" fill="#6c91a9"/>
+    <path d="M131 266 281 235 205 377 84 313Z" fill="#527b98"/>
+    <path d="M281 235 332 341 205 377Z" fill="#83a6bc"/>
+  </g>
+</svg>

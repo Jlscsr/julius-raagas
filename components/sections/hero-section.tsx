@@ -1,138 +1,43 @@
-"use client";
+import Link from "next/link";
 
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
-import { motion, type MotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useTheme } from "@/components/theme-provider";
-import FloatingStone from "../three/floating-stone";
-
-interface HeroSectionProps {
-  scrollOpacity: MotionValue<number>;
-}
-
-export default function HeroSection({ scrollOpacity }: HeroSectionProps) {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && resolvedTheme === "dark";
-
+export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center bg-[var(--wabi-bg)]">
-      {/* 3D Canvas Background */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <Suspense fallback={null}>
-            <ambientLight intensity={isDark ? 0.3 : 0.4} />
-            <directionalLight
-              position={[5, 5, 5]}
-              intensity={isDark ? 0.4 : 0.6}
-              color="#ffffff"
-            />
-            <directionalLight
-              position={[-5, -5, -5]}
-              intensity={isDark ? 0.3 : 0.2}
-              color={isDark ? "#7ba4c2" : "#4a7c9e"}
-            />
-            <FloatingStone />
-            <Environment preset="studio" />
-          </Suspense>
-        </Canvas>
+    <section className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-36 md:px-12 md:pb-24 md:pt-44 lg:min-h-[min(850px,100svh)] lg:grid-cols-[1.4fr_1fr]">
+      <div className="min-w-0">
+        <p className="eyebrow">Full-stack developer · Philippines</p>
+        <h1 className="mt-6 font-serif text-5xl font-normal leading-[1.05] tracking-tight text-[var(--wabi-text)] sm:text-6xl lg:text-7xl">
+          Julius Raagas
+          <span className="mt-4 block text-[var(--wabi-blue)]">Useful products.<br />Thoughtful engineering.</span>
+        </h1>
+        <p className="mt-8 max-w-xl font-serif text-xl leading-relaxed text-[var(--wabi-text-secondary)]">
+          I’m Julius, a full-stack developer based in the Philippines. I enjoy
+          solving problems, learning new things, and building software that’s
+          simple and easy to use.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="#works" className="button-primary">View selected work <span aria-hidden="true">↘</span></Link>
+          <a href="/raagas-julius-caesar-resume.pdf" className="button-secondary">View resume <span className="font-mono text-xs">(PDF)</span></a>
+        </div>
+        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-[var(--wabi-text-muted)]">
+          <a className="inline-flex min-h-11 items-center underline decoration-[var(--wabi-border)] underline-offset-4 hover:text-[var(--wabi-blue)]" href="https://github.com/Jlscsr" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <Link className="inline-flex min-h-11 items-center underline decoration-[var(--wabi-border)] underline-offset-4 hover:text-[var(--wabi-blue)]" href="#contact">Get in touch</Link>
+        </div>
       </div>
-
-      {/* Content - Asymmetric layout */}
-      <motion.div
-        style={{ opacity: scrollOpacity }}
-        className="relative z-10 px-8 md:px-16 lg:px-24 w-full"
-      >
-        <div className="max-w-4xl ml-0 md:ml-[5%] lg:ml-[10%]">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 0.3 }}
-            className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--wabi-text-muted)] mb-6"
-          >
-            Full-Stack Developer | AI-Native Engineer
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] tracking-tight text-[var(--wabi-text)] text-balance"
-          >
-            Julius Raagas
-            <br />
-            <span className="text-[var(--wabi-blue)]">
-              Full-stack developer
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.9 }}
-            className="mt-12 max-w-md font-serif text-lg text-[var(--wabi-text-secondary)] leading-relaxed"
-          >
-            Building full-stack products with clean interfaces, reliable
-            systems, and practical AI workflows. Based in the Philippines,
-            learning in public.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.2 }}
-            className="mt-10 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4 md:gap-6"
-          >
-            <a
-              href="/raagas-julius-caesar-resume.pdf"
-              download
-              className="inline-flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-[var(--wabi-blue)] text-white font-mono text-[10px] md:text-xs tracking-widest uppercase hover:bg-[var(--wabi-blue-hover)] transition-all duration-500 group"
-            >
-              Download Resume
-              <span className="group-hover:translate-x-1 transition-transform duration-300">
-                ↓
-              </span>
-            </a>
-
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 border border-[var(--wabi-blue)] text-[var(--wabi-blue)] font-mono text-[10px] md:text-xs tracking-widest uppercase hover:bg-[var(--wabi-blue)] hover:text-white transition-all duration-500"
-            >
-              Get In Touch
-            </a>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* Scroll indicator - off-center */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-12 right-12 md:right-24"
-      >
-        <div className="flex flex-col items-center gap-3">
-          <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--wabi-text-muted)] rotate-90 origin-center">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-            className="w-px h-12 bg-[var(--wabi-border)]"
-          />
-        </div>
-      </motion.div>
+      <div aria-hidden="true" className="hidden lg:block">
+        <svg viewBox="0 0 420 440" fill="none" className="mx-auto w-full max-w-md">
+          <ellipse cx="213" cy="404" rx="118" ry="10" fill="var(--wabi-text)" opacity=".06" />
+          <path d="M110 65 237 35 343 105 388 231 332 341 205 377 84 313 36 181Z" fill="#96b6c9" />
+          <path d="M110 65 237 35 199 153 36 181Z" fill="#bdd3df" />
+          <path d="M237 35 343 105 199 153Z" fill="#a8c5d6" />
+          <path d="M343 105 388 231 281 235 199 153Z" fill="#89adc4" />
+          <path d="M36 181 199 153 131 266 84 313Z" fill="#759cb5" />
+          <path d="M199 153 281 235 131 266Z" fill="#a2bfce" />
+          <path d="M388 231 332 341 281 235Z" fill="#6c91a9" />
+          <path d="M131 266 281 235 205 377 84 313Z" fill="#527b98" />
+          <path d="M281 235 332 341 205 377Z" fill="#83a6bc" />
+        </svg>
+        <p className="mt-4 text-center font-mono text-xs tracking-[0.2em] text-[var(--wabi-text-muted)]">Simplicity. Structure. Intention.</p>
+      </div>
     </section>
   );
 }

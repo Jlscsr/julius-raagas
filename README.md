@@ -1,132 +1,83 @@
-# Julius Caesar Raagas - Portfolio
+# Julius Raagas — Portfolio
 
-> **AI-Native Developer & Full-Stack Architect**  
-> Building with intention. Wabi-Sabi.
+A portfolio of interactive tools and full-stack web applications, with project
+screenshots, engineering decisions, professional experience, and contact details.
 
-A minimalist portfolio showcasing the progression from full-stack fundamentals to AI-assisted product engineering, interactive planning tools, and modern web systems.
+Live site: https://julius-raagas.vercel.app
 
-## About
+## Development
 
-I'm **Julius Caesar F. Raagas**, a Full-Stack Developer and Computer Science student. I focus on systems where product thinking, interface design, and AI-assisted workflows reinforce each other instead of competing.
+Use Node.js 22.18 or newer and npm. The npm lockfile is the source of truth.
 
-- **Computer Science Student** at Cavite State University - Bacoor Campus (Expected 2026)
-- **Full-Stack Developer** focused on architecture, system design, and fast product iteration
-- Based in the **Philippines**
-- **Contact:** raagasjuliuscaesar@gmail.com
-- **Phone:** +63 977 087 8614
-
-## Featured Projects
-
-### [Heartopia Draft](https://github.com/Jlscsr/heartopia-house-layout-visualizer) (2026)
-
-**Interactive Systems Design**
-
-A metric-first planning tool for Heartopia players with deterministic grid logic, canvas editing workflows, furniture placement, and authenticated project autosave.
-
-- Three-tier spatial grid with 1.0 m, 0.5 m, and 0.25 m precision levels
-- Editing tools for walls, floors, openings, fences, crops, and furniture
-- Responsive editor flows for mobile, tablet, and desktop
-- Signed-in project persistence with autosave, validation, and route protection
-
-**Tech Stack:** Next.js App Router, React 19, TypeScript, Tailwind CSS, MongoDB, Jest
-
-### [Stillness E-commerce](https://github.com/Jlscsr/stillness-ecommerce) (2024)
-
-**AI-Native High-Velocity Development**
-
-A minimalist e-commerce platform built in 72 hours to demonstrate AI-assisted shipping speed without sacrificing UX or maintainability.
-
-- 72-hour development cycle
-- Lighthouse Performance Score: 97/100
-- 80% reduction in traditional development time
-- 40+ reusable UI components
-
-**Tech Stack:** Vue.js, Nuxt.js, TypeScript, Pinia, Tailwind CSS, Vercel
-
-### [What's Your Ulam?](https://github.com/Jlscsr/whats-your-ulam) (2020)
-
-**Core Full-Stack Foundation**
-
-A social platform for recipe sharing that established my early backend, API, and product fundamentals.
-
-- Complete full-stack application from scratch
-- Secure JWT authentication
-- RESTful API with 6+ endpoints
-- Responsive frontend with Vue.js and Quasar
-
-**Tech Stack:** Vue.js, Quasar Framework, Node.js, Express.js, MySQL, AWS S3
-
-## Technical Skills
-
-### Frontend
-
-React, Next.js, Vue.js, Nuxt.js, TypeScript, Three.js, Framer Motion, Tailwind CSS
-
-### Backend
-
-Node.js, Express.js, Laravel, RESTful APIs, GraphQL
-
-### AI Systems
-
-LLM Integration, Prompt Engineering, AI Workflows, Evaluation, Agentic Tooling
-
-### Database
-
-MySQL, MongoDB, PostgreSQL, Supabase
-
-### Cloud & DevOps
-
-AWS, Vercel, Docker, CI/CD
-
-### Design
-
-Figma, SCSS, Responsive Design, Wabi-Sabi Philosophy
-
-## Portfolio Stack
-
-- **Framework:** Next.js 16
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS and CSS variables
-- **Animations:** Framer Motion
-- **3D Graphics:** React Three Fiber and Three.js
-- **UI Components:** Radix UI and shadcn/ui
-- **Analytics:** Vercel Analytics and Speed Insights
-- **Deployment:** Vercel
-
-## Project Structure
-
-```text
-portfolio/
-|-- app/            # Next.js app directory
-|-- components/     # React components and page sections
-|-- lib/            # Shared utilities and project data
-|-- public/         # Static assets
-`-- styles/         # Global styles
+```sh
+npm ci
+npm run dev
 ```
 
-## Design Philosophy
+## Checks and production build
 
-This portfolio embraces **Wabi-Sabi**: simplicity, texture, asymmetry, and restraint. The design emphasizes:
+```sh
+npm run check
+npm run build
+npm start
+```
 
-- Minimalist composition
-- Subtle motion and micro-interactions
-- Mobile-first responsiveness
-- Organic texture through grain overlays
-- Japanese-inspired visual language
+`check` runs ESLint, TypeScript, and Node's built-in test runner. TypeScript errors
+also fail production builds. Tests cover project lookup edge cases and public
+asset integrity.
 
-## Featured Writing
+ESLint stays on version 9 until the Next.js lint plugins support version 10 in
+their peer dependency ranges. npm currently prints a deprecation notice for it.
 
-- **Designing Spatial Planning Tools** - Deterministic rules, reliable interactions, and where precision matters
-- **High-Velocity Shipping** - Building an e-commerce engine in 72 hours
-- **Wabi-Sabi in Code** - Embracing imperfection in system design
+## Structure
 
-## Connect
+- `app/`: routes, metadata, global styles, and the shared layout
+- `components/sections/`: server-rendered portfolio sections
+- `components/navigation.tsx`: navigation using the accessible Radix sheet
+- `components/theme-provider.tsx`: next-themes provider
+- `lib/projects.ts`: the project content used by cards, case studies, and sitemap
+- `public/projects/`: project screenshots
+- `tests/`: regression and content-integrity checks
 
-- [LinkedIn](https://linkedin.com/in/julius-caesar-raagas)
-- [GitHub](https://github.com/Jlscsr)
-- raagasjuliuscaesar@gmail.com
+## Content
 
----
+- **Heartopia Draft:** interactive planning tool; source is private.
+- **Stillness:** e-commerce demonstration built with Vue and Vite.
+- **What's Your Ulam?:** archived recipe-sharing project, presented through screenshots.
 
-**Built with intention** by Julius Caesar Raagas  
-Copyright 2026
+Update project descriptions, links, status, and image captions in
+`lib/projects.ts`. Add a metric only when there is a reproducible measurement
+and enough context to explain it. Do not imply a demonstration processes real
+payments or serves real customers.
+
+The About page describes Computer Science coursework at Cavite State University;
+it does not claim a completed degree.
+
+The resume PDF is maintained separately at
+`public/raagas-julius-caesar-resume.pdf`.
+
+## Design and implementation
+
+Warm neutral colors, blue accents, serif typography, and a static stone
+illustration preserve the Wabi-Sabi influence. Content is visible without
+animation or WebGL. CSS respects reduced-motion preferences, and both color
+themes use shared contrast tokens.
+
+The site uses Next.js, React, TypeScript, Tailwind CSS, Radix Dialog,
+next-themes, and Vercel Analytics / Speed Insights. No database or credentials
+are needed to run the portfolio.
+
+## Deployment
+
+Run the checks and production build before deployment. All canonical URLs,
+structured data, and the sitemap use `https://julius-raagas.vercel.app`.
+Set a new domain consistently before switching production hosting.
+
+Screenshot URLs use the platform's default cache policy so replacing a file does
+not leave clients with a year-long immutable cache.
+
+## Contact
+
+- GitHub: https://github.com/Jlscsr
+- LinkedIn: https://www.linkedin.com/in/julius-caesar-raagas-93b794276/
+- Email: raagasjuliuscaesar@gmail.com

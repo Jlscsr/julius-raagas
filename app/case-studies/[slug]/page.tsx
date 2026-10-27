@@ -1,266 +1,135 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import GrainOverlay from "@/components/grain-overlay";
-import { CaseStudyClient } from "@/app/case-studies/[slug]/case-study-client";
-import { projects, projectsBySlug } from "@/lib/projects";
+import { projects, getProjectBySlug } from "@/lib/projects";
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static params for all case studies.
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+export function generateStaticParams() {
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: CaseStudyPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const study = projectsBySlug[slug];
-
-  if (!study) {
-    return {
-      title: "Case Study Not Found",
-    };
-  }
-
+  const study = getProjectBySlug(slug);
+  if (!study) notFound();
+  const cover = study.images[0];
   return {
-    title: `${study.title} - Case Study`,
-    description: study.concept,
+    title: `${study.title} — Case Study`,
+    description: study.description,
+    alternates: { canonical: `/case-studies/${study.slug}` },
     openGraph: {
-      title: `${study.title} - Case Study | Julius Raagas`,
-      description: study.concept,
-      url: `https://julius-raagas.vercel.app/case-studies/${slug}`,
+      title: `${study.title} | Julius Raagas`,
+      description: study.description,
+      url: `/case-studies/${study.slug}`,
       type: "article",
-      images: study.coverImage ? [{ url: study.coverImage }] : undefined,
+      images: cover ? [{ url: cover.src, alt: cover.alt }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${study.title} - Case Study`,
-      description: study.concept,
-      images: study.coverImage ? [study.coverImage] : undefined,
+      title: study.title,
+      description: study.description,
+      images: cover ? [cover.src] : undefined,
     },
   };
 }
 
-export default async function CaseStudyPage({
-  params,
-}: CaseStudyPageProps) {
+export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const { slug } = await params;
-  const study = projectsBySlug[slug];
-  if (!study) {
-    notFound();
-  }
-
+  const study = getProjectBySlug(slug);
+  if (!study) notFound();
+  const cover = study.images[0];
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: study.title,
-    description: study.concept,
-    author: {
-      "@type": "Person",
-      name: "Julius Caesar Raagas",
-      url: "https://julius-raagas.vercel.app",
-    },
-    datePublished: study.publishedDate,
-    publisher: {
-      "@type": "Person",
-      name: "Julius Caesar Raagas",
-    },
+    description: study.description,
+    url: `https://julius-raagas.vercel.app/case-studies/${study.slug}`,
+    author: { "@type": "Person", name: "Julius Caesar Raagas", url: "https://julius-raagas.vercel.app" },
+    image: cover ? `https://julius-raagas.vercel.app${cover.src}` : undefined,
   };
-  const structuredDataJson = JSON.stringify(structuredData).replace(
-    /</g,
-    "\\u003c",
-  );
 
   return (
-    <main className="min-h-screen bg-[var(--wabi-bg)] text-[var(--wabi-text)] selection:bg-[var(--wabi-blue)]/20">
-      <GrainOverlay />
-
-      <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-[var(--wabi-bg)]/90 px-6 py-6 backdrop-blur-sm md:px-8">
-        <Link
-          href="/"
-          className="font-mono text-[10px] uppercase tracking-widest text-[var(--wabi-text)] transition-colors hover:text-[var(--wabi-blue)] md:text-xs"
-        >
-          &larr; Back to Portfolio
-        </Link>
-      </nav>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
-      />
-
-      <section className="px-6 pb-20 pt-24 sm:pt-32 md:px-16 md:pt-40 lg:px-24">
-        <div className="max-w-5xl">
-          <CaseStudyClient study={study} />
-
-          <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-12">
-            <div className="md:col-span-8">
-              <div>
-                <h2 className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                  The Concept
-                </h2>
-                <p className="font-serif text-2xl leading-relaxed text-[var(--wabi-text-secondary)]">
-                  {study.concept}
-                </p>
-              </div>
-
-              <div className="mt-12">
-                <h2 className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                  The Challenge
-                </h2>
-                <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
-                  {study.challenge}
-                </p>
-              </div>
-
-              <div className="mt-12">
-                <h2 className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                  The Solution
-                </h2>
-                <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
-                  {study.solution}
-                </p>
-              </div>
-
-              {study.results.length > 0 && (
-                <div className="mt-12 border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)] p-8">
-                  <h2 className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-blue)]">
-                    Impact & Results
-                  </h2>
-                  <ul className="space-y-3">
-                    {study.results.map((result, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 font-serif text-base text-[var(--wabi-text-secondary)]"
-                      >
-                        <span className="mt-1 text-[var(--wabi-blue)]">&bull;</span>
-                        <span>{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div className="mt-16 space-y-16">
-                {study.sections.map((section, idx) => (
-                  <div key={idx}>
-                    <h3 className="mb-4 font-serif text-3xl font-light text-[var(--wabi-text)]">
-                      {section.title}
-                    </h3>
-                    <p className="font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
-                      {section.content}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {study.images.length > 0 && (
-                <div className="mt-20">
-                  <h2 className="mb-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                    Project Gallery
-                  </h2>
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    {study.images.map((image, idx) => (
-                      <div
-                        key={idx}
-                        className="relative aspect-video overflow-hidden border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)]"
-                      >
-                        <Image
-                          src={image}
-                          alt={`${study.title} screenshot ${idx + 1}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                          priority={idx === 0}
-                          quality={85}
-                          className="object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {(study.liveDemo || study.github || study.githubBackend) && (
-                <div className="mt-16 flex flex-wrap gap-4">
-                  {study.liveDemo && (
-                    <a
-                      href={study.liveDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 bg-[var(--wabi-blue)] px-8 py-4 font-mono text-xs uppercase tracking-widest text-white transition-all duration-500 hover:bg-[var(--wabi-blue-hover)]"
-                    >
-                      View Live Demo -&gt;
-                    </a>
-                  )}
-                  {study.github && (
-                    <a
-                      href={study.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-[var(--wabi-blue)] px-8 py-4 font-mono text-xs uppercase tracking-widest text-[var(--wabi-blue)] transition-all duration-500 hover:bg-[var(--wabi-blue)] hover:text-white"
-                    >
-                      View on GitHub -&gt;
-                    </a>
-                  )}
-                  {study.githubBackend && (
-                    <a
-                      href={study.githubBackend}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-[var(--wabi-blue)] px-8 py-4 font-mono text-xs uppercase tracking-widest text-[var(--wabi-blue)] transition-all duration-500 hover:bg-[var(--wabi-blue)] hover:text-white"
-                    >
-                      View on GitHub (Backend) -&gt;
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-12 md:col-span-4">
-              <div>
-                <h2 className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                  Role
-                </h2>
-                <p className="font-serif text-lg text-[var(--wabi-text)]">
-                  {study.role}
-                </p>
-              </div>
-
-              <div>
-                <h2 className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--wabi-text-muted)]">
-                  Tech Stack
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {study.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)] px-3 py-1 font-mono text-[10px] tracking-wide text-[var(--wabi-text-muted)]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-6xl px-6 pb-20 pt-28 md:px-12 md:pt-36">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+      <Link href="/#works" className="inline-flex min-h-11 items-center font-mono text-xs text-[var(--wabi-text-muted)] underline underline-offset-4">← Selected work</Link>
+      <header className="mt-8">
+        <p className="eyebrow">{study.category} · {study.timeline}</p>
+        <h1 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl md:text-6xl">{study.title}</h1>
+        <p className="mt-6 max-w-3xl font-serif text-xl leading-relaxed text-[var(--wabi-text-secondary)]">{study.description}</p>
+        <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4">
+          <div><dt className="eyebrow">Role</dt><dd className="mt-2 text-lg">{study.role}</dd></div>
+          <div><dt className="eyebrow">Status</dt><dd className="mt-2 text-lg">{study.status}</dd></div>
+        </dl>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {study.liveDemo && <a href={study.liveDemo} target="_blank" rel="noopener noreferrer" className="button-primary">Open demo ↗</a>}
+          {study.github && <a href={study.github} target="_blank" rel="noopener noreferrer" className="button-secondary">View source ↗</a>}
         </div>
-      </section>
+        <p className="mt-4 max-w-3xl font-serif text-base leading-relaxed text-[var(--wabi-text-secondary)]">{study.statusNote}</p>
+      </header>
 
-      <footer className="border-t border-[var(--wabi-border)] bg-[var(--wabi-bg)] px-8 py-20 text-center">
-        <Link
-          href="/"
-          className="font-serif text-xl italic text-[var(--wabi-text)] transition-colors hover:text-[var(--wabi-blue)]"
-        >
-          Next: Back to Home
-        </Link>
-      </footer>
+      {cover && (
+        <figure className="mt-8">
+          <a href={cover.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size image: ${cover.alt}`} className="block border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)] p-2 sm:p-4">
+            <div className="relative aspect-[2/1]">
+              <Image src={cover.src} alt={cover.alt} fill sizes="(min-width: 1152px) 1056px, 100vw" quality={85} preload className="object-contain" />
+            </div>
+          </a>
+          <figcaption className="mt-3 font-serif text-base text-[var(--wabi-text-muted)]">{cover.alt} Select the image to view it full size.</figcaption>
+        </figure>
+      )}
+
+      <div className="mt-12 flex flex-wrap gap-2" aria-label="Technologies">
+        {study.tech.map((tech) => <span key={tech} className="tech-tag">{tech}</span>)}
+      </div>
+      <div className="mt-12 grid gap-12 md:grid-cols-2">
+        <section aria-labelledby="problem-heading">
+          <h2 id="problem-heading" className="font-serif text-3xl">The problem</h2>
+          <p className="mt-5 font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">{study.challenge}</p>
+        </section>
+        <section aria-labelledby="solution-heading">
+          <h2 id="solution-heading" className="font-serif text-3xl">The implementation</h2>
+          <p className="mt-5 font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">{study.solution}</p>
+        </section>
+      </div>
+      <section aria-labelledby="built-heading" className="mt-12 border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)] p-6 md:p-8">
+        <h2 id="built-heading" className="font-serif text-3xl">What I built</h2>
+        <ul className="mt-5 list-disc space-y-3 pl-5 font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">
+          {study.results.map((result) => <li key={result}>{result}</li>)}
+        </ul>
+      </section>
+      <section aria-label="Engineering decisions and lessons" className="mt-16 max-w-3xl space-y-12">
+        {study.sections.map((section) => (
+          <div key={section.title}>
+            <h2 className="font-serif text-3xl">{section.title}</h2>
+            <p className="mt-5 font-serif text-lg leading-relaxed text-[var(--wabi-text-secondary)]">{section.content}</p>
+          </div>
+        ))}
+      </section>
+      {study.images.length > 1 && (
+        <section aria-labelledby="gallery-heading" className="mt-16">
+          <h2 id="gallery-heading" className="font-serif text-3xl">A closer look</h2>
+          <div className="mt-6 grid gap-8 md:grid-cols-2">
+            {study.images.slice(1).map((image) => (
+              <figure key={image.src}>
+                <a href={image.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size image: ${image.alt}`} className="block border border-[var(--wabi-border)] bg-[var(--wabi-bg-secondary)] p-2">
+                  <div className="relative aspect-video">
+                    <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1152px) 512px, (min-width: 768px) 50vw, 100vw" quality={85} className="object-contain" />
+                  </div>
+                </a>
+                <figcaption className="mt-3 font-serif text-base leading-relaxed text-[var(--wabi-text-muted)]">{image.alt}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+      <div className="mt-16 flex flex-wrap gap-4 border-t border-[var(--wabi-border)] pt-8">
+        <Link href="/#works" className="button-secondary">← More selected work</Link>
+        <Link href="/#contact" className="button-primary">Talk about a project →</Link>
+      </div>
     </main>
   );
 }

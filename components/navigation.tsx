@@ -1,158 +1,85 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Menu } from "lucide-react";
+import { useEffect, useState } from "react";
 import ThemeToggle from "./theme-toggle";
+import {
+  Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader,
+  SheetTitle, SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navItems = [
-  { label: "Expertise", href: "/#expertise" },
-  { label: "Works", href: "/#works" },
+  { label: "Work", href: "/#works" },
   { label: "Experience", href: "/#experience" },
+  { label: "Skills", href: "/#expertise" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navigation() {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    if (href.startsWith("/#") && isHome) {
-      e.preventDefault();
-      const targetId = href.substring(2);
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-    setIsMenuOpen(false);
-  };
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setIsMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
-    <>
-      <motion.nav
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, delay: 0.5 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-[var(--wabi-bg)]/95 backdrop-blur-sm border-b border-[var(--wabi-border)]/50"
-      >
-        <div className="flex justify-between items-center px-6 md:px-16 lg:px-24 py-6 md:py-8">
-          <Link
-            href="/"
-            className="font-serif text-base md:text-lg tracking-wide text-[var(--wabi-text)] relative z-50"
-          >
-            Julius Raagas
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-12">
-            <ul className="flex gap-8 lg:gap-12">
-              {navItems.map((item, index) => (
-                <motion.li
-                  key={item.label}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 + index * 0.1 }}
-                >
-                  <Link
-                    href={item.href}
-                    onClick={(e) => handleSmoothScroll(e, item.href)}
-                    className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--wabi-text-muted)] hover:text-[var(--wabi-blue)] transition-colors duration-500"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile Menu Button & Theme Toggle */}
-          <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5 hover:opacity-70 transition-opacity"
-              aria-label="Toggle menu"
-            >
-              <motion.span
-                animate={
-                  isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
-                }
-                className="w-6 h-px bg-[var(--wabi-text)] block"
-              />
-              <motion.span
-                animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                className="w-6 h-px bg-[var(--wabi-text)] block"
-              />
-              <motion.span
-                animate={
-                  isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
-                }
-                className="w-6 h-px bg-[var(--wabi-text)] block"
-              />
-            </button>
-          </div>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--wabi-border)] bg-[var(--wabi-bg)]/95 backdrop-blur-sm">
+      <nav aria-label="Main navigation" className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 md:px-12">
+        <Link href="/" className="inline-flex min-h-11 items-center font-serif text-xl text-[var(--wabi-text)]">
+          Julius Raagas
+        </Link>
+        <div className="hidden items-center gap-6 lg:flex">
+          <ul className="flex items-center gap-5">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-[var(--wabi-text-muted)] transition-colors hover:text-[var(--wabi-blue)]">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <ThemeToggle />
         </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden fixed inset-0 bg-[var(--wabi-bg)] z-40"
-              onClick={() => setIsMenuOpen(false)}
-            />
-
-            {/* Menu Content */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden fixed top-0 left-0 right-0 bottom-0 h-screen bg-[var(--wabi-bg)] pt-28 px-6 z-[45] overflow-y-auto"
-            >
-              <ul className="space-y-8">
-                {navItems.map((item, index) => (
-                  <motion.li
-                    key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className="font-serif text-3xl text-[var(--wabi-text)] hover:text-[var(--wabi-blue)] transition-colors duration-500 block"
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-
-              {/* Mobile Menu Footer */}
-              <div className="mt-auto pt-12 pb-12">
-                <p className="font-mono text-[10px] tracking-widest uppercase text-[var(--wabi-text-muted)]">
-                  侘寂 — Wabi-Sabi
-                </p>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+        <div className="flex items-center gap-1 lg:hidden">
+          <ThemeToggle />
+          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <SheetTrigger asChild>
+              <button type="button" aria-label="Open navigation menu" className="inline-flex size-11 items-center justify-center">
+                <Menu className="size-6" aria-hidden="true" />
+              </button>
+            </SheetTrigger>
+            <SheetContent className="w-full max-w-sm overflow-y-auto px-6 py-8">
+              <SheetHeader className="px-0">
+                <SheetTitle className="font-serif text-2xl font-normal">Explore</SheetTitle>
+                <SheetDescription className="sr-only">Portfolio navigation</SheetDescription>
+              </SheetHeader>
+              <nav aria-label="Mobile navigation">
+                <ul className="space-y-3">
+                  {navItems.map((item) => (
+                    <li key={item.href}>
+                      <SheetClose asChild>
+                        <Link href={item.href} className="block py-3 font-serif text-3xl hover:text-[var(--wabi-blue)]">
+                          {item.label}
+                        </Link>
+                      </SheetClose>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <p className="mt-auto pt-8 font-mono text-xs tracking-wider text-[var(--wabi-text-muted)]">
+                Building with intention.
+              </p>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </nav>
+    </header>
   );
 }
